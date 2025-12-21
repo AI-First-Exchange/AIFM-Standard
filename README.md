@@ -1,136 +1,200 @@
-# AIM-Standard
-AIM (AI Music Format) is an open, ZIP-based container standard for AI-generated music. It packages audio, prompts, metadata, licensing, artwork, stems, and provenance into a single .aim file. Designed for AI-native platforms, transparent attribution, and future-proof music workflows.
-🌐 AIM – AI Music Format
-A new open standard for AI-generated music
+AIFM — AI First Music Format (.aifm)
 
-File extension: .aim
-Version: 1.0.0
+Part of the AI First Exchange (AIFX)
+
+AIFM (AI First Music Format) is an open, ZIP-based standard for AI-generated music. It packages audio assets, prompts, generation parameters, stems, artwork, licensing information, and declared provenance into a single .aifm file.
+
+AIFM is designed for transparent, inspectable, and interoperable AI-native music workflows across platforms and tools.
 
 🎧 Overview
 
-AIM (AI Music Format) is an open, ZIP-based standard for AI-generated music.
-It packages audio, prompts, metadata, licensing, artwork, stems, and provenance into a single .aim file.
-Designed for AI-native platforms, transparent attribution, and future-proof music workflows.
+An .aifm file represents a single AI-generated music track with structured
+context describing:
 
-📦 What’s Inside an .aim File?
+how the music was generated
 
-An .aim file is a ZIP container with a structured directory:
+with what tools or models
+
+under what parameters
+
+and how humans may have curated or edited the result
+
+AIFM documents declared metadata and workflow context.
+It does not guarantee reproducibility, legal authorship, or ownership.
+
+📦 AIFM Container Structure
+
+An .aifm file is a ZIP container with the following standardized layout:
+
 /
-  manifest.json                     # REQUIRED: core metadata
+  manifest.json                     # REQUIRED: primary music manifest
   audio/
-    main.mp3                        # REQUIRED: main track (or main.wav / main.flac)
-    stems/                          # OPTIONAL: separated instrument files
+    main.mp3                        # REQUIRED: main track (or wav / flac)
+    stems/                          # OPTIONAL: separated instrument stems
   artwork/
     cover.jpg                       # OPTIONAL: cover art
   prompts/
-    generation.txt                  # OPTIONAL: raw AI prompt
+    generation.txt                  # OPTIONAL: main prompt
     negative.txt                    # OPTIONAL: negative prompt
     settings.json                   # OPTIONAL: generation parameters
   legal/
-    license.txt                     # OPTIONAL: license terms
-    terms.txt                       # OPTIONAL: additional rights info
+    license.txt                     # OPTIONAL: licensing terms
+    terms.txt                       # OPTIONAL
   extra/
-    notes.md                        # OPTIONAL: custom data
-The manifest.json file defines descriptive metadata, technical details, AI generation parameters, and file paths.
+    notes.md                        # OPTIONAL: creator notes
 
-🧠 Key Features
-✔ AI-native metadata
 
-Stores:
+The manifest.json anchors the container by defining metadata, declared AI
+sources, provenance, and file references.
 
-AI tool name (e.g., Suno)
+🧠 Key Capabilities
+✔ AI-Native Music Metadata
 
-Model version
+AIFM may record declared information such as:
 
-Prompt text
+AI tool or platform identifier (e.g., Suno)
 
-Settings used
+Model or version name
 
-Creator identity
+Prompt and negative prompt sources
+
+Generation parameters (tempo, style, structure, etc.)
 
 Creation timestamp
 
-✔ One file for everything
+Declared creator identity
 
-Audio + prompts + metadata + rights + artwork + stems in a single portable .aim.
+Toolchain history
 
-✔ Transparent provenance
+✔ Unified Music Container
 
-Ensures the origin and generation method of AI music is verifiable.
+A single .aifm file may include:
 
-✔ Open and extensible
+Final audio track
 
-AIM is a ZIP-based format readable by any programming language.
+Stems (optional)
 
-📑 manifest.json Structure (Simplified)
+Prompts and settings
+
+Artwork
+
+Licensing information
+
+Declared provenance
+
+This supports exchange, archiving, review, and platform ingestion
+without relying on external sidecar files.
+
+✔ Declared Provenance & Transparency
+
+AIFM enables documentation of:
+
+who declared authorship
+
+which tools were used
+
+what inputs shaped the output
+
+when the track was generated
+
+AIFM records declared provenance, not absolute proof of origin.
+
+✔ Open & Extensible Design
+
+AIFM is:
+
+ZIP-based
+
+JSON-driven
+
+language-agnostic
+
+forward-compatible
+
+Developers may extend AIFM for:
+
+multi-track or album workflows
+
+remix or derivative tracking
+
+DAW integration
+
+AI music publishing platforms
+
+📑 manifest.json (Simplified Example)
 {
-  "aim_version": "1.0.0",
-  "id": "aim-2025-000001",
+  "aifm_version": "1.0.0",
+  "id": "aifm-2025-000001",
   "title": "Track Title",
-  "primary_artist": "Artist Name",
+  "creator": "Artist Name",
   "duration_seconds": 180.0,
   "genres": ["lofi"],
   "ai_generated": true,
 
   "ai_source": {
     "tool_name": "Suno",
-    "tool_version": "v4",
     "model_name": "Suno-v4",
-    "prompt_source": "prompts/generation.txt"
+    "prompt_source": "prompts/generation.txt",
+    "settings_source": "prompts/settings.json"
   },
 
   "provenance": {
     "creator_handle": "YourName",
     "creation_utc": "2025-11-25T20:31:00Z",
-    "tool_chain": ["Suno", "AIM-WRAPPER v1.0"]
+    "tool_chain": ["Suno", "AIFX Converter v1.0"]
   },
 
   "files": {
     "main_audio": "audio/main.mp3",
-    "cover_art": "artwork/cover.jpg"
+    "stems": [],
+    "cover_art": "artwork/cover.jpg",
+    "license_file": "legal/license.txt"
   }
 }
-🧰 Tools (Coming Soon)
-
-Reference implementations will include:
-
-aimwrap – CLI tool for wrapping MP3/WAV into .aim
-
-aimcore – Library for reading/writing AIM files
-
-aim-validator – Spec compliance checker
 
 🌐 MIME Type
 
-Recommended MIME type for AIM files:
-audio/aim
+Proposed MIME type:
+
+audio/aifm
+
+🧰 Tooling (Planned)
+
+Reference implementations may include:
+
+aifmwrap — package audio assets into .aifm
+
+aifm-validate — validate AIFM containers
+
+aifm-core — libraries for reading/writing AIFM files
+
 🛠 Use Cases
 
-AI music platforms
+AI music publishing platforms
 
-Audio archiving
+Transparent AI music labeling
 
-Creator attribution
+Creator attribution and curation
 
-Remix lineage tracking
+Remix and derivative tracking
 
-Transparent AI-generated content labeling
+Archival of AI-native music works
 
 🔄 Versioning
 
-AIM follows semantic versioning:
+AIFM follows semantic versioning:
 
-1.x.x → Backwards-compatible updates
+1.x.x — backward-compatible enhancements
 
-2.x.x → Breaking spec changes
+2.x.x — backward-incompatible schema changes
 
-Platforms should safely ignore unknown fields for future compatibility.
+Unknown fields should be ignored for forward compatibility.
 
 📬 Contributing
 
-AIM is an open specification.
-Feedback, ideas, and pull requests are welcome.
+AIFM is an open specification under the AI First Exchange (AIFX).
+Feedback, proposals, and pull requests are welcome.
 
 📝 License
 
-This project is released under the MIT License.
+Released under the MIT License.
