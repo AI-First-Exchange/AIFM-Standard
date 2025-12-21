@@ -1,14 +1,18 @@
-# LEGAL DISCLAIMER
+LEGAL DISCLAIMER
 
-The AI Format Foundation does not provide legal advice.  
-The guidance in this repository is informational and reflects general interpretations of copyright rules for AI-assisted works as of the date of publication.
+AI First Exchange (AIFX)
 
-Creators must consult a qualified attorney or copyright authority for formal legal advice.
+The AI First Exchange (AIFX) does not provide legal advice.
+The guidance in this repository is informational only and reflects general interpretations of copyright and authorship considerations for AI-assisted works as of the date of publication.
 
-The Foundation:
-- Does not certify copyright eligibility
-- Does not guarantee legal protection
-- Does not validate the truth of metadata provided
-- Is not liable for legal outcomes based on use of this standard
+Creators are responsible for consulting qualified legal professionals or appropriate authorities for formal legal advice.
 
-These standards exist solely to document metadata and improve transparency in AI-generated media workflows.
+AIFX:
+
+Does not certify copyright eligibility
+Does not guarantee legal protection
+Does not verify or validate creator-supplied metadata
+Does not enforce compliance with copyright or licensing laws
+Is not liable for legal outcomes arising from use of these standards
+
+AIFX standards exist solely to document metadata, declare provenance, and improve transparency in AI-generated and AI-assisted media workflows.
