@@ -1,191 +1,219 @@
-# AI FORMAT FOUNDATION — VERIFICATION SPECIFICATION  
+# AI FIRST EXCHANGE — VERIFICATION SPECIFICATION (AIFX-VS)
 Version 1.0 • 2025  
-Applies to: AIM, AIV, AII, AIP Standards
+Applies to: AIFM, AIFV, AIFI, AIFP Standards
 
 ---
 
 ## 1. Purpose of Verification
-The purpose of the AI Format Verification System (AFF-VS) is to establish **trust levels** for AI-generated media by documenting the source, human involvement, and authenticity of metadata. This specification introduces three verification tiers, badge definitions, manifest fields, and validation rules.
 
-The Verification System ensures:
-- Transparency of content origin  
-- Authenticity of creator identity  
-- Reliability of metadata  
-- Ecosystem-wide trust signaling  
-- Future compatibility with platform APIs  
+The **AI First Exchange Verification System (AIFX-VS)** establishes graduated
+**trust tiers** for AI-first media by documenting **declared provenance,
+creator identity signals, and metadata integrity**.
+
+This specification defines verification tiers, badge semantics,
+required manifest fields, and validation workflows for all
+formats governed by the **AI First Exchange (AIFX)**.
+
+AIFX-VS is designed to:
+- Improve transparency of declared content origin
+- Signal creator identity confidence
+- Preserve metadata integrity
+- Enable ecosystem-wide trust indicators
+- Remain compatible with future platform integrations
+
+AIFX-VS **does not guarantee legal authorship, ownership, or absolute origin**.
+It records documented workflow context only.
 
 ---
 
 ## 2. Verification Tiers
 
-### 🟡 **Tier 1 — Self-Declared Authenticity (SDA)**
+### 🟡 Tier 1 — Self-Declared Authenticity (SDA)
 **Badge:** 🟡 SDA  
 **Trust Level:** Low  
 
-Requirements:
-- Creator manually enters metadata  
-- No email or identity verification  
-- No platform confirmation  
+**Requirements:**
+- Creator manually supplies metadata
+- No email or identity verification
+- No platform signal
 
-Intended for:
-- Early-stage creators  
-- Offline workflows  
-- Simple conversions  
+**Intended for:**
+- Early-stage creators
+- Offline or experimental workflows
+- Basic format conversions
 
-#### Manifest Fields Required:
+**Required Manifest Fields:**
+```json
 "verification": {
-"trust_level": "self-declared",
-"method": "manual-entry",
-"verified_email": false,
-"platform_api": false,
-"signature": null
+  "trust_level": "self-declared",
+  "method": "manual-entry",
+  "verified_email": false,
+  "platform_signal": false,
+  "signature": null
 }
-
----
-
-### 🔵 **Tier 2 — Verified Creator (VC)**
-**Badge:** 🔵 VC  
-**Trust Level:** Medium
-
-Requirements:
-- Verified email  
-- Human-authorship statement signed  
-- Optional OAuth login (Google/GitHub/etc.)  
-- SHA-256 hash signature stored in manifest  
-
-Intended for:
-- Professional creators  
-- Monetization eligibility  
-- Portfolio building  
-
-#### Manifest Fields Required:
-"verification": {
-"trust_level": "creator-verified",
-"method": "email-and-signature",
-"verified_email": true,
-"platform_api": false,
-"signature": "sha256-hash-of-authorship-statement"
-}
-
----
-
-### 🟢 **Tier 3 — Platform Verified Authenticity (PVA)**
-**Badge:** 🟢 PVA  
-**Trust Level:** High  
+```
+🔵 Tier 2 — Verified Creator (VC)
+Badge: 🔵 VC
+Trust Level: Medium
 
 Requirements:
-- External AI generator confirms metadata  
-- API call returns prompt, model, timestamps  
-- Optional cryptographic signing (future version)  
+
+Verified email address
+
+Human authorship statement signed
+
+Optional OAuth authentication
+
+Cryptographic hash recorded in manifest
 
 Intended for:
-- Suno Verified Tracks  
-- Veo Verified Videos  
-- SDXL / Runway Verified Images  
-- Enterprise or legal-sensitive applications  
 
-#### Manifest Fields Required:
+Professional creators
+
+Monetized content
+
+Portfolio and publishing workflows
+
+Required Manifest Fields:
+
+```json
+Copy code
 "verification": {
-"trust_level": "platform-verified",
-"method": "platform-api",
-"verified_email": true,
-"platform_api": "suno | veo | runway | sdxl | other",
-"signature": "base64-digital-signature"
+  "trust_level": "creator-verified",
+  "method": "email-and-signature",
+  "verified_email": true,
+  "platform_signal": false,
+  "signature": "sha256-hash"
 }
+```
+🟢 Tier 3 — Platform Verified Authenticity (PVA)
+Badge: 🟢 PVA
+Trust Level: High
 
----
+Requirements:
 
-## 3. Verification Metadata Schema
+Metadata validated via trusted platform or pipeline signal
 
-All AIFF (AI Format Foundation) formats MUST include:
+Prompt, model, and timestamp confirmation where supported
+
+Optional cryptographic signing (future-compatible)
+
+Intended for:
+
+Platform-verified AI media
+
+Enterprise or compliance-sensitive workflows
+
+Legal-adjacent use cases
+
+Required Manifest Fields:
+
+```json
+Copy code
+"verification": {
+  "trust_level": "platform-verified",
+  "method": "platform-signal",
+  "verified_email": true,
+  "platform_signal": "suno | veo | runway | other",
+  "signature": "base64-signature"
+}
+```
+Platform verification depends on tool support and does not imply
+universal verification across all generators.
+
+3. Verification Metadata Fields
+All AIFX formats MAY include the following optional fields:
+
+```json
+Copy code
 "verification_notes": "",
 "reviewed_by": "",
 "verification_version": "1.0"
+```
+4. Verification Workflows
+🟡 Self-Declared Workflow
+Creator supplies metadata
 
----
+Converter packages AIFX file
 
-## 4. Verification Workflow
+Manifest stored without signing
 
-### 🟡 Self-Declared Workflow
-1. Creator fills metadata  
-2. Converter wraps file  
-3. Manifest is stored as-is  
-4. Badge = SDA  
+Badge assigned: SDA
 
-### 🔵 Verified Creator Workflow
-1. Creator logs in  
-2. Email verification sent  
-3. Creator signs authorship statement  
-4. Application hashes signature  
-5. Manifest updated  
-6. Badge = VC  
+🔵 Verified Creator Workflow
+Creator authenticates
 
-### 🟢 Platform Verified Workflow
-1. Creator provides AI platform track/video/image ID  
-2. Converter calls API:  
-GET /metadata/{id}
-3. Metadata validated  
-4. Optional digital signature verified  
-5. Manifest updated  
-6. Badge = PVA  
+Email verified
 
----
+Authorship statement signed
 
-## 5. Badge Display Rules
+Signature hash recorded
 
-### 🟡 SDA  
-Displayed anywhere the file appears.  
-Lower priority in rankings and discovery.
+Manifest updated
 
-### 🔵 VC  
-Displayed with creator profile and content cards.  
-Eligible for monetization and promotion.
+Badge assigned: VC
 
-### 🟢 PVA  
-Displayed prominently.  
-Mark of highest authenticity.  
-Eligible for premium-tier placement and enterprise use.
+🟢 Platform Verified Workflow
+Creator provides platform reference ID
 
----
+Trusted signal or API metadata retrieved
 
-## 6. Security & Anti-Fraud Considerations
+Metadata validated
 
-- Manifest fields must be immutable after signing  
-- Hash-based signatures prevent metadata tampering  
-- Optional blockchain anchoring may be supported in future versions  
-- API-level verification prevents fraudulent metadata  
-- Converter tools MUST log verification decisions  
+Optional signature verified
 
----
+Manifest updated
 
-## 7. Future Extensions (Version 2.0 Roadmap)
+Badge assigned: PVA
 
-- Digital certificate signing for `.aim` / `.aiv` / `.aii` / `.aip`  
-- Public key directory for platforms  
-- Blockchain metadata anchoring  
-- Verification revocation system  
-- Partnered verification nodes  
-- Federation across multiple creative tools  
+5. Badge Display Rules
+SDA: Displayed universally; lowest discovery priority
 
----
+VC: Displayed with creator identity; eligible for monetization
 
-## 8. Compliance Statement
+PVA: Displayed prominently; eligible for premium and enterprise contexts
 
-Implementations that fully adhere to this spec may display:
+Badges represent trust tier, not creative quality or legal status.
 
-AI Format Foundation
-Verification Compliance Mark (VCM)
-Version 1.0
+6. Security & Anti-Fraud Considerations
+Signed manifest fields MUST remain immutable
 
-Non-compliant tools must NOT use the verification badges or claim alignment.
+Hash-based signatures prevent silent tampering
 
----
+Verification actions SHOULD be logged by converter tools
 
-## 9. Changelog
+Blockchain anchoring MAY be supported in future versions
 
-**1.0 – Initial Release**
-- Establishes SDA, VC, PVA tiers  
-- Introduces manifest verification schema  
-- Defines badge behavior  
-- Outlines workflow requirements  
-- Includes future-ready API verification system  
+Fraudulent badge claims may result in revocation
+
+7. Future Extensions (v2.0 Roadmap)
+Public-key verification registry
+
+Signature revocation mechanisms
+
+Federated verification authorities
+
+Optional blockchain timestamp anchoring
+
+Cross-platform verification bridges
+
+8. Compliance Statement
+Implementations that fully adhere to this specification may display the:
+
+AIFX Verification Mark (AVM)
+Verification Specification v1.0
+
+Non-compliant tools MUST NOT claim verification alignment or display AIFX badges.
+
+9. Changelog
+v1.0 — Initial Release
+
+Defines SDA, VC, and PVA tiers
+
+Establishes verification schema
+
+Specifies badge semantics
+
+Introduces integrity-first trust model
+
+Fully aligned with AIFX standards
