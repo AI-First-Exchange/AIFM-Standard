@@ -80,3 +80,51 @@ AIFM MUST include the canonical `integrity` block:
     "manifest.json": {"sha256": "<sha256_of_manifest_canonical_excludes_self>"}
   }
 }
+```
+Rules
+	•	integrity.algorithm MUST be "sha256".
+	•	integrity.hashed_files MUST be an object with sha256 entries for all required files.
+	•	Required hashed files include at minimum:
+	•	the primary audio asset (e.g., assets/audio.wav)
+	•	manifest.json
+
+Canonical excludes self
+
+The manifest.json hash MUST be computed over the manifest JSON with the manifest.json hash entry excluded.
+
+⸻
+
+5) Validation outcomes
+
+A package FAILS if any required field is missing, empty, or invalid, including:
+	•	missing manifest.json
+	•	missing work.title
+	•	missing creator.name or creator.contact
+	•	verification_tier not "SDA"
+	•	ai_generated not true
+	•	missing/empty declaration
+	•	missing integrity or integrity mismatch
+	•	missing primary audio asset
+	•	unsafe paths/symlinks
+
+⸻
+
+6) v0 scope boundary
+
+AIFM v0 does not:
+	•	prove originality
+	•	verify identity
+	•	enforce licensing
+	•	perform moderation
+
+It only enforces:
+	•	structure
+	•	SDA boundary
+	•	canonical integrity
+
+⸻
+
+Core principle
+
+Declare only what you can prove today.
+Design for what you can verify tomorrow.
