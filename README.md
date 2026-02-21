@@ -25,7 +25,7 @@ It does not guarantee reproducibility, legal authorship, or ownership.
 📦 AIFM Container Structure
 
 An .aifm file is a ZIP container with the following standardized layout:
-
+```
 /
   manifest.json                     # REQUIRED: primary music manifest
   audio/
@@ -42,7 +42,7 @@ An .aifm file is a ZIP container with the following standardized layout:
     terms.txt                       # OPTIONAL
   extra/
     notes.md                        # OPTIONAL: creator notes
-
+```
 
 The manifest.json anchors the container by defining metadata, declared AI
 sources, provenance, and file references.
@@ -122,6 +122,7 @@ DAW integration
 AI music publishing platforms
 
 📑 manifest.json (Simplified Example)
+```
 {
   "aifm_version": "1.0.0",
   "id": "aifm-2025-000001",
@@ -151,7 +152,7 @@ AI music publishing platforms
     "license_file": "legal/license.txt"
   }
 }
-
+```
 🌐 MIME Type
 
 Proposed MIME type:
